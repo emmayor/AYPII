@@ -11,25 +11,46 @@ from ListaEn_Ej1 import ListaEnlazada
 
 listaTareas = ListaEnlazada()
 
-desc = -1
-while desc != '0':
-    desc = input("Ingrese el nombre de la tarea a agregar. Ingrese 0 para terminar\n")
-    if desc != '0':
-        # Como usamos el último elemento de la lista para generar el número, debemos asegurarnos de que 
-        # éste exista. 
-        if listaTareas.ult_nodo != None:
-            listaTareas.append((listaTareas.ult_nodo.valor()[0]+1,desc))
-        else:
-            listaTareas.append((0,desc))
-        print(f"Se ha creado la tarea \"{desc}\". Indice: {listaTareas.ult_nodo.valor()[0]}")
+def agregarTarea():
+    desc = -1
+    while desc != '0':
+        desc = input("Ingrese el nombre de la tarea a agregar. Ingrese 0 para terminar\n")
+        if desc != '0':
+            # Como usamos el último elemento de la lista para generar el número, debemos asegurarnos de que 
+            # éste exista. 
+            if listaTareas.ult_nodo != None:
+                listaTareas.append((listaTareas.ult_nodo.valor()[0]+1,desc))
+            else:
+                listaTareas.append((0,desc))
+            print(f"Se ha creado la tarea \"{desc}\". Indice: {listaTareas.ult_nodo.valor()[0]}")
 
-desc = -1
-while desc != 0:
-    desc = int(input("Ingrese el número de la tarea a borrar. Ingrese 0 para terminar\n"))
-    if desc != 0:
-        for i in listaTareas:
-            if i.valor()[0] == desc:
-                # DEVOLVER() EN VEZ DE BORRAR()
-                listaTareas.borrar(i.valor())
+def eliminarTarea():
+    # Indice es un número mayor a 0
+    indice = -1
+    while indice != 0:
+        indice = int(input("Ingrese el número de la tarea a borrar. Ingrese 0 para terminar\n"))
+        if indice != 0:
+            for tarea in listaTareas:
+                if tarea.valor()[0] == indice:
+                    listaTareas.borrar(tarea.valor())
+            print(f"Se ha eliminado la tarea número \"{indice}\"")
+def imprimirLista():
+    print(listaTareas)
 
-print(listaTareas)
+
+entrada = ''
+while entrada != '0':
+    print("LISTADOR DE TAREAS - SELECCIONE UNA OPCION")
+    print("1: Añadir tareas")
+    print("2: Eliminar tareas")
+    print("3: Imprimir lista de tareas")
+    print("0: Salir")
+    entrada = input('> ')
+    # Se requiere Python 3.10 para que funcione nuestro nuevo "switch" 
+    match entrada:
+        case '1':
+            agregarTarea()
+        case '2':
+            eliminarTarea()
+        case '3':
+            imprimirLista()
