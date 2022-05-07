@@ -33,6 +33,7 @@ class ListaEnlazada:
             cuenta += 1
         return cuenta
     def indice(self,busqueda):
+        """ Devuelve la posición del nodo buscado """
         if self.estaVacia():
             return None
         indice = 0
@@ -55,17 +56,6 @@ class ListaEnlazada:
         if self.prim == None:
             return True
         return False
-    def indice(self,busqueda):
-        if self.estaVacia():
-            return 0
-        cuenta = 0
-        nodoActual = self.prim
-        while(nodoActual != None and nodoActual.dato != busqueda):
-            nodoActual = nodoActual.proximo()
-            cuenta += 1
-        if nodoActual == None:
-            return None
-        return cuenta
     def append(self,dato):
         """ Agrega un nuevo elemento al final de la lista """
         nuevoNodo = Nodo(dato)
