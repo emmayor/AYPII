@@ -2,29 +2,34 @@
 # administrar una lista de tareas pendientes. 
 # Dá la opción de elegir entre las operaciones: agregar tareas, borrar tareas o listar las tareas de la lista.
 # Considerá lo siguiente:
-# • Las tareas se agregan al final de la lista, y llevan un número de ítem de lista y una descripción. El número se genera automáticamente a partir del número del último elemento de la lista + 1.
+# • Las tareas se agregan al final de la lista, y llevan un número de ítem de lista y una descripción. 
+#   El número se genera automáticamente a partir del número del último elemento de la lista + 1.
 # • Se puede borrar una tarea de cualquier lugar de la lista, utilizando el número de ítem.
 # • La opción de listar muestra todas las tareas pendientes que están en la lista, en el orden en que se agregaron.
 
 from ListaEn_Ej1 import ListaEnlazada
 
 listaTareas = ListaEnlazada()
-desc = -1
 
+desc = -1
 while desc != '0':
     desc = input("Ingrese el nombre de la tarea a agregar. Ingrese 0 para terminar\n")
     if desc != '0':
-        listaTareas.append((len(listaTareas)-1)//2)
-        listaTareas.append(desc)
+        # Como usamos el último elemento de la lista para generar el número, debemos asegurarnos de que 
+        # éste exista. 
+        if listaTareas.ult_nodo != None:
+            listaTareas.append((listaTareas.ult_nodo.valor()[0]+1,desc))
+        else:
+            listaTareas.append((0,desc))
+        print(f"Se ha creado la tarea \"{desc}\". Indice: {listaTareas.ult_nodo.valor()[0]}")
 
-        print(f"Se ha creado la tarea \"{desc}\"")
 desc = -1
-while desc != '0':
-    desc = input("Ingrese el número de la tarea a borrar. Ingrese 0 para terminar\n")
-    if desc != '0':
+while desc != 0:
+    desc = int(input("Ingrese el número de la tarea a borrar. Ingrese 0 para terminar\n"))
+    if desc != 0:
         for i in listaTareas:
-            if i.proximo().valor() == desc:
-                i.setproximo(i.proximo().proximo().proximo())
-        
+            if i.valor()[0] == desc:
+                # DEVOLVER() EN VEZ DE BORRAR()
+                listaTareas.borrar(i.valor())
 
 print(listaTareas)
