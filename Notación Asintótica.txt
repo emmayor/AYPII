@@ -1,0 +1,37 @@
+Notacion asintótica:
+
+O = Peor caso
+Ω = Mejor caso
+Θ = Caso promedio
+
+A partir de una función de complejidad se pide:
+
+Obtener la cota superior (O)
+
+Ej: f(n) = 3(n^2) - 100n + 6
+
+f(n) <= c * g(n)
+
+(la función debe ser menor a una función g multiplicada por una constante)
+
+En este caso, el orden es cuadrático.
+Se descartan los terminos constantes y lineales
+
+f(n) = 3(n^2) - 100n + 6 <= 3*n^2
+
+METODOS:
+1: "A ojo" uno busca la constante c y busca el n0 a partir del cual la cota es válida
+
+Si n = 0 la cota no es válida porque f(0) = 6 y g(0) = 0
+Si n = 1 la cota es válida ya que f(1) = -91 y g(1) = 3
+
+
+2: Ingresar en una planilla de calculo las dos funciones, evaluamos para distintos
+valores de n y se grafican para mayor seguridad
+
+3: Cargar las funciones en graficadoras
+
+4: Analiticamente: Planteo f(n) <= c.g(n) y busco el punto de c y de n que hace que esto se cumple
+(c pertenece a los naturales y se cumple para n >= 0)
+
+
