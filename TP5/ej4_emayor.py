@@ -21,12 +21,12 @@ def agregarTarea():
             if listaTareas.ult_nodo != None:
                 listaTareas.append((listaTareas.ult_nodo.valor()[0]+1,desc))
             else:
-                listaTareas.append((0,desc))
+                listaTareas.append((1,desc))
             print(f"Se ha creado la tarea \"{desc}\". Indice: {listaTareas.ult_nodo.valor()[0]}")
 
 def eliminarTarea():
     # Indice es un número mayor a 0
-    indice = -1
+    indice = None
     while indice != 0:
         indice = int(input("Ingrese el número de la tarea a borrar. Ingrese 0 para terminar\n"))
         if indice != 0:
@@ -34,9 +34,9 @@ def eliminarTarea():
                 if tarea.valor()[0] == indice:
                     listaTareas.borrar(tarea.valor())
             print(f"Se ha eliminado la tarea número \"{indice}\"")
+
 def imprimirLista():
     print(listaTareas)
-
 
 entrada = ''
 while entrada != '0':
