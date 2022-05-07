@@ -6,8 +6,10 @@
 # Recordá modificar los métodos que se ven afectados por la desaparición/agregado de los atributos len y ult_nodo
 
 # La ventaja de tener un puntero al útlimo elemento es que para devolver el mismo el orden de complejidad pasaría a ser
-# constante, distinto a tener que recorrer la lista hasta encontrar el primer elemento que apunte a None, cuyo orden de
+# constante, distinto a tener que recorrer la lista hasta encontrar el primer elemento que apunte a None, en ese caso el orden de
 # complejidad es lineal
+
+# Además de los métodos solicitados por el ejercicio, se añaden los métodos
 
 from ClaseNodo import Nodo
 
@@ -24,6 +26,7 @@ class ListaEnlazada:
         iter(self.iterador)
         return self.iterador
     def __len__(self):
+        """ Devuelve la longitud de la lista recorriendola """
         if self.estaVacia():
             return 0
         cuenta = 1
@@ -44,6 +47,56 @@ class ListaEnlazada:
         if nodoActual == None:
             return None
         return indice
+    def borrar(self,x): 
+        if self.estaVacia():
+            raise ValueError("Lista Vacía.")
+        if self.prim.dato == x:
+            # Caso particular: saltear la cabecera de la lista
+            self.prim = self.prim.prox
+        else:
+            # Buscar el nodo anterior al que contiene a x (nodoAnterior)
+            nodoAnterior = self.prim
+            nodoActual = nodoAnterior.prox
+            while nodoActual is not None and nodoActual.dato != x:
+                nodoAnterior = nodoActual
+                nodoActual = nodoAnterior.prox
+            if nodoActual == None:
+                raise ValueError("El valor no está en la lista.")
+            # Descartar el nodo
+            nodoAnterior.prox = nodoActual.prox
+        # Si el elemento que se borró fue el último, actualizar self.ult_nodo
+        if nodoActual.prox == None:
+            self.ult_nodo = nodoAnterior
+            print(self.ult_nodo.dato)
+    def devolver(self, i=None):
+        """ Elimina el nodo de la posición i, y devuelve el dato contenido.
+        Si i está fuera de rango, se levanta la excepción IndexError.
+        Si no se recibe la posición, devuelve el último elemento."""
+
+        if i is None:
+            i = self.len - 1
+        if i == 0:
+            # Caso particular: Saltear la cabecera de la lista
+            dato = self.prim.dato
+            self.prim = self.prim.prox
+        else:
+            # Buscar los nodos en las posiciones (i-1) e (i)
+            nodoAnterior = self.prim
+            nodoActual = nodoAnterior.prox
+            for pos in range(1, i):
+                nodoAnterior = nodoActual
+                nodoActual = nodoAnterior.prox
+            # Guardar el dato y descartar el nodo
+            dato = nodoActual.dato
+            nodoAnterior = nodoActual.prox
+        # Si el elemento que se borró fue el último, actualizar self.ult_nodo
+        if nodoActual.prox == None:
+            self.ult_nodo = nodoAnterior
+            print(self.ult_nodo.dato)
+        return dato
+
+    def ultimo(self): # Ya que estamos, agregamos un método para saber cual es el último nodo de la lista
+        return self.ult_nodo
     def __str__(self):
         text = ""
         nodo = self.prim
