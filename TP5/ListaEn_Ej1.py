@@ -67,7 +67,7 @@ class ListaEnlazada:
         # Si el elemento que se borró fue el último, actualizar self.ult_nodo
         if nodoActual.prox == None:
             self.ult_nodo = nodoAnterior
-            print(self.ult_nodo.dato)
+        print(self.ult_nodo.dato)
     def devolver(self, i=None):
         """ Elimina el nodo de la posición i, y devuelve el dato contenido.
         Si i está fuera de rango, se levanta la excepción IndexError.
@@ -88,11 +88,11 @@ class ListaEnlazada:
                 nodoActual = nodoAnterior.prox
             # Guardar el dato y descartar el nodo
             dato = nodoActual.dato
-            nodoAnterior = nodoActual.prox
+            nodoAnterior.prox = nodoActual.prox
         # Si el elemento que se borró fue el último, actualizar self.ult_nodo
-        if nodoActual.prox == None:
+        if nodoAnterior.prox == None:
             self.ult_nodo = nodoAnterior
-            print(self.ult_nodo.dato)
+        print(self.ult_nodo.dato)
         return dato
 
     def ultimo(self): # Ya que estamos, agregamos un método para saber cual es el último nodo de la lista
