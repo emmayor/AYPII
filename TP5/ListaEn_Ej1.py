@@ -52,6 +52,7 @@ class ListaEnlazada:
             raise ValueError("Lista Vacía.")
         if self.prim.dato == x:
             # Caso particular: saltear la cabecera de la lista
+            nodoActual = self.prim
             self.prim = self.prim.prox
         else:
             # Buscar el nodo anterior al que contiene a x (nodoAnterior)
@@ -65,9 +66,9 @@ class ListaEnlazada:
             # Descartar el nodo
             nodoAnterior.prox = nodoActual.prox
         # Si el elemento que se borró fue el último, actualizar self.ult_nodo
-        if nodoActual.prox == None:
-            self.ult_nodo = nodoAnterior
-        print(self.ult_nodo.dato)
+            if nodoActual.prox == None:
+                self.ult_nodo = nodoAnterior
+            print(self.ult_nodo.dato)
     def devolver(self, i=None):
         """ Elimina el nodo de la posición i, y devuelve el dato contenido.
         Si i está fuera de rango, se levanta la excepción IndexError.
