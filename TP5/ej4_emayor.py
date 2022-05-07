@@ -1,4 +1,6 @@
-# Crear un programa que, usando el TAD definido en el Ejercicio 1, permita a un usuario administrar una lista de tareas pendientes. Dá la opción de elegir entre las operaciones: agregar tareas, borrar tareas o listar las tareas de la lista.
+# Crear un programa que, usando el TAD definido en el Ejercicio 1, permita a un usuario
+# administrar una lista de tareas pendientes. 
+# Dá la opción de elegir entre las operaciones: agregar tareas, borrar tareas o listar las tareas de la lista.
 # Considerá lo siguiente:
 # • Las tareas se agregan al final de la lista, y llevan un número de ítem de lista y una descripción. El número se genera automáticamente a partir del número del último elemento de la lista + 1.
 # • Se puede borrar una tarea de cualquier lugar de la lista, utilizando el número de ítem.
@@ -12,11 +14,17 @@ desc = -1
 while desc != '0':
     desc = input("Ingrese el nombre de la tarea a agregar. Ingrese 0 para terminar\n")
     if desc != '0':
-        nuevaTarea = (desc,len(listaTareas)+1)
-        listaTareas.append(nuevaTarea)
+        listaTareas.append((len(listaTareas)-1)//2)
+        listaTareas.append(desc)
+
         print(f"Se ha creado la tarea \"{desc}\"")
+desc = -1
 while desc != '0':
-    desc = input("Ingrese el nombre de la tarea a borrar. Ingrese 0 para terminar\n")
+    desc = input("Ingrese el número de la tarea a borrar. Ingrese 0 para terminar\n")
     if desc != '0':
-        pos = listaTareas.indice()
+        for i in listaTareas:
+            if i.proximo().valor() == desc:
+                i.setproximo(i.proximo().proximo().proximo())
+        
+
 print(listaTareas)
