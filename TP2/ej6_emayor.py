@@ -5,7 +5,7 @@
 # mida cuánto tarda la ejecución. Para esto, utilice la función time() del módulo time de Python.
 
 from math import sqrt, floor
-from time import time
+from time import perf_counter_ns
 
 def fibRecursiva(n):
     if n in (0,1):
@@ -28,19 +28,19 @@ def fibFormula(n):
 
 def fibonacci_completo(n):
     res = [[0,0],[0,0],[0,0]]
-    start = time()
+    start = perf_counter_ns()
     res[0][0] = fibRecursiva(n)
-    stop = time()
+    stop = perf_counter_ns()
     res[0][1] = stop-start
 
-    start = time()
+    start = perf_counter_ns()
     res[1][0] = fibIterativa(n)
-    stop = time()
+    stop = perf_counter_ns()
     res[1][1] = stop-start
 
-    start = time()
+    start = perf_counter_ns()
     res[2][0] = fibFormula(n)
-    stop = time()
+    stop = perf_counter_ns()
     res[2][1] = stop-start
     return res
 
