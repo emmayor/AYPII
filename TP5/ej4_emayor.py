@@ -46,7 +46,7 @@ while entrada != '0':
     print("3: Imprimir lista de tareas")
     print("0: Salir")
     entrada = input('> ')
-    # Se requiere Python 3.10 para que funcione nuestro nuevo "switch" 
+    # Se requiere Python 3.10 para que funcione "switch" 
     match entrada:
         case '1':
             agregarTarea()
