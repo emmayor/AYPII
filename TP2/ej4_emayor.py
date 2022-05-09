@@ -4,7 +4,7 @@
 
 # OPERADORES BIT A BIT
 # Se usa el '>>' para desplazar los bits usados para representar a n 1 espacio a la derecha en cada iteración.
-# Los bits que estaban en el bit más significativo son descartados. Si el número es menor o igual a 1 entonces 
+# Los bits menos significativos son descartados. Si el número es menor o igual a 1 entonces 
 # se llega al caso base y el programa devuelve el total de iteraciones realizadas, coincidiendo con el número
 # de bits desplazados hasta que n = 0
 
