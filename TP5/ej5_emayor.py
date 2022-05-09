@@ -1,21 +1,4 @@
 from ListaEn_Ej1 import ListaEnlazada
-from ClaseNodo import Nodo
-
-listaItems = ListaEnlazada()
-
-listaItems.append('A')
-listaItems.append('B')
-listaItems.append('C')
-listaItems.append('D')
-listaItems.append('E')
-listaItems.append('F')
-listaItems.append('G')
-listaItems.append('H')
-listaItems.append('I')
-listaItems.append('J')
-
-
-print(listaItems)
 
 def intercambiar(i, lista):
     """ Invierte la posicion del i-elemento de la lista con su siguiente (i va de 0 a hasta len-1)"""
@@ -49,6 +32,26 @@ def intercambiar(i, lista):
     else:
         raise IndexError("Item fuera de rango")
 
-intercambiar(6,listaItems)
 
-print(listaItems)
+
+
+# Código de prueba
+
+# listaItems = ListaEnlazada()
+
+# listaItems.append('A')
+# listaItems.append('B')
+# listaItems.append('C')
+# listaItems.append('D')
+# listaItems.append('E')
+# listaItems.append('F')
+# listaItems.append('G')
+# listaItems.append('H')
+# listaItems.append('I')
+# listaItems.append('J')
+
+# print(listaItems)
+
+# intercambiar(6,listaItems)
+
+# print(listaItems)
