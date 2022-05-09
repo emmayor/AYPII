@@ -14,7 +14,4 @@ from ListaEn_Ej5 import ListaEnlazada
 listaImpares = ListaEnlazada()
 listaPares = ListaEnlazada()
 
-def intercalarDesc(lista1, lista2):
-
-
-
+# def intercalarDesc(lista1, lista2):
