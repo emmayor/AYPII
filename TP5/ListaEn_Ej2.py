@@ -52,7 +52,7 @@ class ListaEnlazada:
         
     def imprimir(self):
         if self.estaVacia():
-            print('[]', end="")
+            print('[]')
         else:
             nodoActual = self.prim
             print('[', end="")
