@@ -9,7 +9,7 @@
 # constante, distinto a tener que recorrer la lista hasta encontrar el primer elemento que apunte a None, cuyo orden de
 # complejidad es lineal
 
-from ListaEn_Ej1 import *
+from ListaEn_def import ListaEnlazada
 
 miLista = ListaEnlazada()
 
