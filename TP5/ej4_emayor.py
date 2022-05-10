@@ -7,7 +7,7 @@
 # • Se puede borrar una tarea de cualquier lugar de la lista, utilizando el número de ítem.
 # • La opción de listar muestra todas las tareas pendientes que están en la lista, en el orden en que se agregaron.
 
-from ListaEn_Ej1 import ListaEnlazada
+from ListaEn_def import ListaEnlazada
 
 listaTareas = ListaEnlazada()
 
