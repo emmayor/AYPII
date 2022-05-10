@@ -1,16 +1,3 @@
-# Modificar el TAD ListaEnlazada visto en la teoría, de tal forma que:
-# 1. No tenga la longitud de la lista en la cabecera (quitar el atributo len)
-# 2. Tenga un atributo ult_nodo, que sea una referencia al último nodo de la lista. ¿Cuales son las ventajas y
-# desventajas de agregar este atributo?
-# 3. Tenga por lo menos los siguientes métodos: __str__ , __len__ , agregar(x), indice(x)
-# Recordá modificar los métodos que se ven afectados por la desaparición/agregado de los atributos len y ult_nodo
-
-# La ventaja de tener un puntero al útlimo elemento es que para devolver el mismo el orden de complejidad pasaría a ser
-# constante, distinto a tener que recorrer la lista hasta encontrar el primer elemento que apunte a None, en ese caso el orden de
-# complejidad es lineal
-
-# Además de los métodos solicitados por el ejercicio, se añaden los métodos
-
 from ClaseNodo import Nodo
 
 class ListaEnlazada:
@@ -51,11 +38,9 @@ class ListaEnlazada:
         if self.estaVacia():
             raise ValueError("Lista Vacía.")
         if self.prim.dato == x:
-            # Caso particular: saltear la cabecera de la lista
             nodoActual = self.prim
             self.prim = self.prim.prox
         else:
-            # Buscar el nodo anterior al que contiene a x (nodoAnterior)
             nodoAnterior = self.prim
             nodoActual = nodoAnterior.prox
             while nodoActual is not None and nodoActual.dato != x:
@@ -63,9 +48,7 @@ class ListaEnlazada:
                 nodoActual = nodoAnterior.prox
             if nodoActual == None:
                 raise ValueError("El valor no está en la lista.")
-            # Descartar el nodo
             nodoAnterior.prox = nodoActual.prox
-        # Si el elemento que se borró fue el último, actualizar self.ult_nodo
             if nodoActual.prox == None:
                 self.ult_nodo = nodoAnterior
             print(self.ult_nodo.dato)
@@ -77,26 +60,22 @@ class ListaEnlazada:
         if i is None:
             i = self.len - 1
         if i == 0:
-            # Caso particular: Saltear la cabecera de la lista
             dato = self.prim.dato
             self.prim = self.prim.prox
         else:
-            # Buscar los nodos en las posiciones (i-1) e (i)
             nodoAnterior = self.prim
             nodoActual = nodoAnterior.prox
             for pos in range(1, i):
                 nodoAnterior = nodoActual
                 nodoActual = nodoAnterior.prox
-            # Guardar el dato y descartar el nodo
             dato = nodoActual.dato
             nodoAnterior.prox = nodoActual.prox
-        # Si el elemento que se borró fue el último, actualizar self.ult_nodo
         if nodoAnterior.prox == None:
             self.ult_nodo = nodoAnterior
         print(self.ult_nodo.dato)
         return dato
 
-    def ultimo(self): # Ya que estamos, agregamos un método para saber cual es el último nodo de la lista
+    def ultimo(self): 
         return self.ult_nodo
     def __str__(self):
         text = ""
@@ -123,70 +102,62 @@ class ListaEnlazada:
         self.ult_nodo = nuevoNodo
     def agregar_ordenado_asc(self,dato):
         """ Agrega elementos con orden ascendente """
-        # Si la lista está vacía, o el elemento debería ir
-        # primero, se crea el nodo apuntando a self.prim
-        # (que podría valer None cuando está vacía)
-        # y se lo convierte en primer nodo
         if self.estaVacia() or dato < self.prim.valor():
             nuevo = Nodo(dato,self.prim)
             self.prim = nuevo
-        # En cualquier otro caso:
         else:
-
-            # Se parte desde el primer nodo:
             nodoActual = self.prim
-
-            # Se busca su posición comparando su valor con
-            # el de nodoActual() hasta que llega a uno con mayor valor
-            # o hasta que no hayan más (esto queriendo decir que debe ir último)
             while(nodoActual.proximo() != None and nodoActual.proximo().valor() < dato):
                 nodoActual = nodoActual.proximo()
-
-            # Luego se crea el nuevo apuntando al próximo de nodoActual...
             nuevo = Nodo(dato,nodoActual.proximo())
-
-            # ...y por último se apunta el nodoActual al nuevo...
-            nodoActual.setproximo(nuevo) # setproximo() = siguiente()
-
-            # La asignación quedaría de la siguiente manera:
-            # ... -> nodoActual -> nuevo -> nodoActual.proximo() -> ...
-            # (obviamente que luego de ésta operación "nodoActual.proximo()" sería "nuevo",
-            # pero es para dar una idea de cómo queda "encajado" entre los dos que ya estaban)
-
-            # Si el elemento agregado es el último de la lista, entonces apuntamos
-            # self.ult_nodo al elemento agregado
+            nodoActual.setproximo(nuevo) 
         if nuevo.proximo() == None:
             self.ult_nodo = nuevo
 
 def intercambiar(i, lista):
-    """ Invierte la posicion del i-elemento de la lista con su siguiente (i va de 0 a hasta len-1)"""
-    # Fijamos un elemento contiguo a otro
+    """ Invierte la posicion del i-elemento de la lista con su siguiente
+     (i va de 0 a hasta len-1)"""
     ant = lista.prim
     act = ant.proximo()
     sig = act.proximo()
-
-    # Si el índice es 0 (el primer elemento de la lista), entonces no hace falta referenciar al anterior
-    # Simplemente se establece el próximo como el primer elemento y a éste último como el que le sigue
-
     if i == 0:
-        lista.prim.setproximo(sig)
+        ant.setproximo(sig)
         act.setproximo(lista.prim)
-        lista.prim = act
-
-    # Si el índice está entre 0 y len-1, entonces buscamos el item moviendo de lugar
-    # los tres punteros ant, act y sig
-
+        ant = act
     elif i > 0 and i < len(lista)-1:
-        for i in range(0, i-1):
-            ant = ant.proximo()
-            act = act.proximo()
-            sig = sig.proximo()
+        for i in range(i-1):
+            ant = ant.proximo()               
+        act = ant.proximo()
+        sig = act.proximo()
 
-        # Reasignamos los proximos de cada nodo
         ant.setproximo(sig)
         act.setproximo(sig.proximo())
         sig.setproximo(act)
-    # En cualquier otro caso, el índice está fuera de rango
     else:
         raise IndexError("Item fuera de rango")
 
+        
+def intercalarDesc(lista1, lista2):
+    listaFinal = ListaEnlazada()
+    # Buscamos la lista más larga
+    lenMin,lenMax = sorted([len(lista1), len(lista2)])
+    if lenMax == len(lista1):
+        larga = lista1
+    else:
+        larga = lista2
+    lenMod = lenMax - lenMin
+    # Esto no me gusta para nada, pero no concibo cómo
+    # iterar la lista al reves sin modificar el TAD!
+    # ListaEnlazada -> Iterable -> Lista -> ListaInvertida
+    listaTemp = reversed(list(larga))
+    # Primero sumamos los elementos extra de la lista mas larga
+    while lenMod != 0:
+        listaFinal.append(next(listaTemp))
+        lenMod-=1
+    # Despues intercalamos con el resto y los preordenamos para 
+    # agregarlos a la lista final
+    for item1,item2 in reversed(list(zip(lista1,lista2))):
+        mini,maxi = sorted([item1.valor(), item2.valor()])
+        listaFinal.append(maxi)
+        listaFinal.append(mini)
+    return listaFinal

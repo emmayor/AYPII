@@ -34,7 +34,4 @@ class Nodo:
         return self.prox
     def setproximo(self, otro):
         """ Establece el próximo elemento a éste """
-        self.prox = otro
-
-        
-
+        self.prox = otro     
