@@ -161,26 +161,18 @@ def intercambiar(i, lista):
     else:
         raise IndexError("Item fuera de rango")
 
-        
 def intercalarDesc(lista1, lista2):
     listaFinal = ListaEnlazada()
-    # Buscamos la lista más larga
     lenMin,lenMax = sorted([len(lista1), len(lista2)])
     if lenMax == len(lista1):
         larga = lista1
     else:
         larga = lista2
     lenMod = lenMax - lenMin
-    # Esto no me gusta para nada, pero no concibo cómo
-    # iterar la lista al reves sin modificar el TAD!
-    # ListaEnlazada -> Iterable -> Lista -> ListaInvertida
     listaTemp = reversed(list(larga))
-    # Primero sumamos los elementos extra de la lista mas larga
     while lenMod > 0:
         listaFinal.append(next(listaTemp))
         lenMod-=1
-    # Despues intercalamos con el resto y los preordenamos para 
-    # agregarlos a la lista final
     for item1,item2 in reversed(list(zip(lista1,lista2))):
         mini,maxi = sorted([item1.valor(), item2.valor()])
         listaFinal.append(maxi)
