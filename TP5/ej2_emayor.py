@@ -3,7 +3,7 @@
 # de las listas de Python. Utilizá para ello el 
 # método imprimeLista(nodo) definido en clase.
 
-from ListaEn_def import ListaEnlazada
+from ClaseLista import ListaEnlazada
 
 miLista = ListaEnlazada()
 

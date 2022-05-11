@@ -6,7 +6,7 @@
 # 3. Si cualquiera de los nodos es diferente, este método debe devolver “False”.
 # 4. Si se terminó de chequear todos los nodos y todos son iguales, el método debe devolver “True”.
 
-from ListaEn_def import ListaEnlazada
+from ClaseLista import ListaEnlazada
 
 miLista = ListaEnlazada()
 

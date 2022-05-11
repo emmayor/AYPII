@@ -1,4 +1,4 @@
-from ListaEn_def import ListaEnlazada, intercambiar
+from ClaseLista import ListaEnlazada, intercambiar
 
 # Código de prueba
 listaItems = ListaEnlazada()

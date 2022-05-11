@@ -9,7 +9,7 @@
 # L2 = [0, 20, 40, 60, 80, 100]
 # L3 = [100, 80, 60, 46, 45, 40, 20, 12, 1, 0]
 
-from ListaEn_def import ListaEnlazada, intercalarDesc
+from ClaseLista import ListaEnlazada, intercalarDesc
 
 listaA = ListaEnlazada()
 listaB = ListaEnlazada()
