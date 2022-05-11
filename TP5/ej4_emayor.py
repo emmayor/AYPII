@@ -18,8 +18,8 @@ def agregarTarea():
         if desc != '0':
             # Como usamos el último elemento de la lista para generar el número, debemos asegurarnos de que 
             # éste exista. 
-            if listaTareas.ult_nodo != None:
-                listaTareas.append((listaTareas.ult_nodo.valor()[0]+1,desc))
+            if listaTareas.ultimo() != None:
+                listaTareas.append((listaTareas.ultimo().valor()[0]+1,desc))
             else:
                 listaTareas.append((1,desc))
             print(f"Se ha creado la tarea \"{desc}\". Indice: {listaTareas.ult_nodo.valor()[0]}")
@@ -47,7 +47,7 @@ while entrada != '0':
     print("0: Salir")
     entrada = input('> ')
     # Se requiere Python 3.10 para que funcione "switch" 
-    match entrada:
+    match(entrada):
         case '1':
             agregarTarea()
         case '2':
