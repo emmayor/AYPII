@@ -100,6 +100,7 @@ class ListaEnlazada:
                 n = n.proximo()
             n.setproximo(nuevoNodo)
         self.ult_nodo = nuevoNodo
+    
     def agregar_ordenado_asc(self,dato):
         """ Agrega elementos con orden ascendente """
         if self.estaVacia() or dato < self.prim.valor():
@@ -151,7 +152,7 @@ def intercalarDesc(lista1, lista2):
     # ListaEnlazada -> Iterable -> Lista -> ListaInvertida
     listaTemp = reversed(list(larga))
     # Primero sumamos los elementos extra de la lista mas larga
-    while lenMod != 0:
+    while lenMod > 0:
         listaFinal.append(next(listaTemp))
         lenMod-=1
     # Despues intercalamos con el resto y los preordenamos para 
