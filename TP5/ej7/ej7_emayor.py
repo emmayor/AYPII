@@ -21,6 +21,7 @@
 # incluyendo los exámenes rendidos y las notas obtenidas. Se debe informar si el alumno no existe en la lista.
 # Para resolver los ejercicios, se puede extender el TAD con los métodos que consideres necesarios.
 
+import datetime
 from ListaDeAlumnos import *
 
 test1 = ListaDeAlumnos()
@@ -34,6 +35,13 @@ test1.append("24-18-869", 38626806, "Nievas Arroyo", "Joel Leonardo", 123)
 test1.append("24-18-951", 39443047, "Vidal", "Emanuel Guillermo", 123)
 
 entrada = ""
+
+alConFinal = test1.busqPorID("24-18-975")
+alConFinal.agregarFinal("IF010",datetime.date(2019,5,10),9)
+
+alConFinal.imprimir()
+
+# Prueba de agregarFinal()
 
 while entrada != '0':
     entrada = str(input("Ingrese un número de alumno. 0 para salir.\n> "))
