@@ -22,6 +22,18 @@ class ListaEnlazada:
             nodoActual = nodoActual.proximo()
             cuenta += 1
         return cuenta
+    def imprimir(self):
+        if self.estaVacia():
+            print('[]')
+        else:
+            nodoActual = self.prim
+            print('[', end="")
+            while(nodoActual != None):
+                print(nodoActual.valor(), end="")
+                if nodoActual.proximo() != None:
+                    print(', ', end="")
+                nodoActual = nodoActual.proximo()
+            print(']')
     def indice(self,busqueda):
         """ Devuelve la posición del nodo buscado """
         if self.estaVacia():
@@ -74,7 +86,6 @@ class ListaEnlazada:
             self.ult_nodo = nodoAnterior
         print(self.ult_nodo.dato)
         return dato
-
     def ultimo(self): 
         return self.ult_nodo
     def __str__(self):
@@ -114,6 +125,19 @@ class ListaEnlazada:
             nodoActual.setproximo(nuevo) 
         if nuevo.proximo() == None:
             self.ult_nodo = nuevo
+    def iguales(self, otraLista):
+        """ Compara dos listas: La que llama al método y la que se pasa por parámetro. 
+        Si son iguales devuelve True, en caso contrario devuelve False"""
+        if len(self) != len(otraLista):
+            return False
+        nodoActual = self.prim
+        otraActual = otraLista.prim
+        while (nodoActual != None):
+            if nodoActual.valor() != otraActual.valor():
+                return False
+            nodoActual = nodoActual.proximo()
+            otraActual = otraActual.proximo()
+        return True
 
 def intercambiar(i, lista):
     """ Invierte la posicion del i-elemento de la lista con su siguiente
