@@ -7,18 +7,22 @@ APU["IF010"] = "Analisis y Diseño de Sistemas"
 APU["IF002"] = "Expresión de Problemas y Algoritmos"
 APU["IF001"] = "Elementos de Informática"
 
+
 class Alumno:
     """ Define un dato de tipo Alumno, con las siguientes características """
+
     def __init__(self, a_id, a_di, a_ap, a_nm, a_cc, prox=None, ante=None):
+
+
         self.alu_id = a_id
         self.alu_di = a_di
         self.alu_ap = a_ap
         self.alu_nm = a_nm
         self.alu_cc = a_cc
         self.alu_ex = []
-        self.prox = prox    ## Enlace al próximo alumno
-        self.ante = ante    ## Enlace al anterior alumno
-	
+        self.prox = prox  # Enlace al próximo alumno
+        self.ante = ante  # Enlace al anterior alumno
+
     def __str__(self):
         return "{} {}, {}".format(self.alu_id, self.alu_ap, self.alu_nm)
 
@@ -57,7 +61,6 @@ class Alumno:
 
 class ListaDeAlumnos:
     """Modela una lista enlazada."""
-
     def __init__(self):
         """Crea una lista enlazada vacía."""
         # referencia al primer nodo (None si la lista está vacía)
@@ -131,19 +134,19 @@ class ListaDeAlumnos:
             raise IndexError("El Alumno {} no existe".format(a_id))
 
         if antAlu == None:
-            ## Borrar el primer alumno de la lista
+            # Borrar el primer alumno de la lista
             self.prim = actAlu.proximo()
             if self.prim != None:
                 self.prim.enlazarAnterior(actAlu.anterior())
             else:
-                ## Era el primer y único alumno de la lista!!
+                # Era el primer y único alumno de la lista!!
                 self.ulti = None
         elif actAlu.proximo() == None:
-            ## Es el último alumno de la lista
+            # Es el último alumno de la lista
             antAlu.enlazarProximo(actAlu.proximo())
             self.ulti = antAlu
         else:
-            ## Es un alumno del medio
+            # Es un alumno del medio
             antAlu.enlazarProximo(actAlu.proximo())
             actAlu.proximo().enlazarAnterior(actAlu)
                 

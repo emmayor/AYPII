@@ -90,17 +90,15 @@ def escribir(dato, posx, posy, t_cfg):
 
 """ ******************* Prueba ******************* """
 # Cargar un árbol
-#test1 = Arbol(20)
-#lnodos = [10, 30, 5, 15, 25, 35, 3, 7, 13, 17, 23, 27, 33, 37]
-#lnodos = [10, 30, 5, 15, 25, 35]
-#lnodos = [10, 30]
-#lnodos = [25, 30, 40]
+# test1 = ArbolBB(20)
+# lnodos = [10, 30, 5, 15, 25, 35, 3, 7, 13, 17, 23, 27, 33, 37]
+# lnodos = [10, 30, 5, 15, 25, 35]
+# lnodos = [10, 30]
+# lnodos = [25, 30, 40]
 
-#test1 = ArbolBB('B')
-#lnodos = ['A', 'D', 'C', 'H']
+# test1 = ArbolBB('B')
+# lnodos = ['A', 'D', 'C', 'H']
 
-#for nod in lnodos:
+# for nod in lnodos:
 #   test1.insertar(nod)
-
-#Imprimir por niveles
-#ImprimirABT(test1)
+# ImprimirABT(test1)
