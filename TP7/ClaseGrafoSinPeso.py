@@ -29,7 +29,7 @@ class Grafo:
         self.lista_vertices[x] = nw
         self.n_arcos += 1
 
-    def insertar(self, x, z, excepcion=False):
+    def insertar(self, x, z, doble=False):
         """ Agregar el vértice de origen. Si excepcion es True, 
         entonces se hace arista doble si es_dirigido = True 
          y arista simple si es_dirigido = False """
@@ -39,7 +39,7 @@ class Grafo:
         if z not in self.lista_vertices:
             self.lista_vertices[z] = None
         self.insertarArco(x, z)
-        if (not self.dirigido() ^ excepcion) and z != x:
+        if (doble) and z != x:
             self.insertarArco(z, x)
 
     def imprimir(self):
