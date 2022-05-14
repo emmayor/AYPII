@@ -7,12 +7,16 @@ class ArbolBB:
     def __str__(self):
         return str(self.dato)
     def izquierdo(self,dato):
+        """ Define un árbol izquierdo """
         self.izq = ArbolBB(dato)
     def derecho(self,dato):
+        """ Define un árbol derecho """
         self.der = ArbolBB(dato)
     def subizq(self):
+        """ Devuelve el árbol izquierdo"""
         return self.izq
     def subder(self):
+        """ Devuelve el árbol derecho"""
         return self.der
     def valor(self):
         return self.dato
@@ -35,8 +39,21 @@ class ArbolBB:
                 self.der = ArbolBB(x)
             else:
                 self.der.insertar(x)
-    def eliminar(self,x):
+    #def eliminar(self,x):
         """ Elimina elementos del árbol. (Reemplaza su valor con el mayor de su izquierda o el menor de su derecha)"""
+    def maximo(self):
+        actual = self
+        while actual.subder() != None:
+            if actual.subder() != None:
+                actual = actual.subder()
+        return actual.valor()
+    def minimo(self):
+        actual = self
+        while actual.subizq() != None:
+            if actual.subizq() != None:
+                actual = actual.subizq()
+        return actual.valor()
+        
 
 
 def sizeA(arbol):
@@ -47,7 +64,7 @@ def sizeA(arbol):
 def alturaA(arbol):
     """ Calcula la altura del árbol, que es el camino más largo """
     """ de la raíz a una hoja """
-    """ Se eligió ls implementación como función, no es un método """
+    """ Se eligió la implementación como función, no es un método """
 
     if arbol == None:
         return -1
