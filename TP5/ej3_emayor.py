@@ -17,8 +17,11 @@ miLista.append("865")
 otraLista = ListaEnlazada()
 
 otraLista.append("3")
-otraLista.append("krjhfykjrthy")
+otraLista.append("trkjh")
 otraLista.append("865")
+
+
+
 
 
 print(miLista.iguales(otraLista))
