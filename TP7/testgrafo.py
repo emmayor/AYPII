@@ -14,4 +14,3 @@ grafo1.insertar(d,a)
 grafo1.imprimir()
 res = BFS(grafo1, "a")
 
-

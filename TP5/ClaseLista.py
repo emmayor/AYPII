@@ -146,9 +146,9 @@ def intercambiar(i, lista):
     act = ant.proximo()
     sig = act.proximo()
     if i == 0:
+        lista.prim = act
         ant.setproximo(sig)
-        act.setproximo(lista.prim)
-        ant = act
+        act.setproximo(ant)
     elif i > 0 and i < len(lista)-1:
         for i in range(i-1):
             ant = ant.proximo()               
