@@ -1,9 +1,6 @@
 import pyglet
 from Grafo import Grafo
 
-
-
-
 class GrafoPlot:
     def __init__(self, grafo, titulo="Grafo", ancho=800, alto=600):
         self.windowH = ancho
@@ -18,7 +15,9 @@ class GrafoPlot:
         for nodo in self.grafo.lista_vertices:
             nodoPosX = 400+i
             nodoPosY = 500
-            self.listaCirculos[nodo] = (pyglet.shapes.Circle(nodoPosX, nodoPosY, 20, batch=self.GBatch),pyglet.text.Label(text=nodo, color=(255,0,0,0), font_size=14, x=nodoPosX+10 // 2, y=nodoPosY+10,anchor_x='center',batch=self.GBatch))
+            self.listaCirculos[nodo] = (pyglet.shapes.Circle(nodoPosX, nodoPosY, 20, batch=self.GBatch),
+                                        pyglet.text.Label(text=nodo, color=(255,0,0,0), font_size=14, x=nodoPosX+10 // 2,
+                                        y=nodoPosY+10,batch=self.GBatch))
             i += 40
 
     
@@ -42,6 +41,13 @@ pyglet.gl.glClearColor(0.8, 0.8, 0.8, 1.0)
 def on_draw():
     grafico.window.clear()
     grafico.GBatch.draw()
+
+# on mouse drag event
+@grafico.window.event
+def on_mouse_drag(x, y, dx, dy, buttons, modifiers):
+    # printing some message
+    print("Mouse is dragged")
+     
 
 
 # Main entry point
