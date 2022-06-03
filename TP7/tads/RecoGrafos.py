@@ -1,4 +1,4 @@
-from tads import Cola
+from tads.Cola import Cola
 
 def procesar_vertice_temprano(valor_vertice):
 	print(f"Vertice: {valor_vertice}")

@@ -25,7 +25,7 @@ class Arista:
 		print(" ")
 
 
-class Grafo:
+class GrafoPond:
 	def __init__(self, es_dirigido = False):
 		self.lista_vertices = {}
 		self.n_arcos = 0
@@ -60,9 +60,9 @@ class Grafo:
 		if dirigido is False and z != x:
 			self.insertar(z,x, peso_arco, True)
 	def primer_adyacente(self, x):
-		""" Devuelve el primer vértice adyacente (si existe) de x"""
+		""" Devuelve el primer vertice adyacente (si existe) de x"""
 		if x not in self.lista_vertices:
-			raise Error("El vértice no existe en el diccionario del Grafo")
+			raise ValueError("El vertice no existe en el diccionario del Grafo")
 		else:
 			return self.lista_vertices[x]
 

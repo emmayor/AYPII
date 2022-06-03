@@ -1,5 +1,5 @@
-from ClaseGrafoPond import Grafo
-from ClaseRGrafo import BFS
+from tads.GrafoPond import Grafo
+from tads.GrafoPond import BFS
 
 gpes = Grafo()
 

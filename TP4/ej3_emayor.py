@@ -12,8 +12,11 @@ cadena = Pila()
 
 while cr != '*':
     cr = input('Ingrese un caracter. * para terminar \n> ')
-    if cr != '*':
-        cadena.apilar(cr)
+    cadena.apilar(cr)
+
+# En vez de chequear si lo que se ingreso fue un asterisco, lo sacamos, porque sabemos que 
+# está al final de la pila. Cuesta menos :)
+cadena.desapilar()
 
 while not cadena.estaVacia():
     print(cadena.desapilar(), end='')

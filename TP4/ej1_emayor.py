@@ -5,6 +5,8 @@
 # (b) C A Y * * O P O * * R L * A * * V E N T * * * I L * A C * I O * * * N * D E L B A Ñ O * * * * * *
 
 # Quedan formadas las palabras "SAPO" y "COVID"
+# Al desapilar, quedan las mismas palabras pero con orden inverso
+
 
 from tads import Pila
 
@@ -26,3 +28,9 @@ transformarPila(pila2,cadena2)
 
 print(pila1)
 print(pila2)
+
+while not pila1.estaVacia():
+    print(pila1.desapilar())
+
+while not pila2.estaVacia():
+    print(pila2.desapilar())

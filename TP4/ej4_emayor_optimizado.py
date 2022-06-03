@@ -12,6 +12,7 @@
 # medir el tiempo de normalizacion y comparacion, junto a un archivo con 
 # mas de 400000 caracteres iguales (que es un palindromo)
 
+from curses import raw
 from tads import Pila
 
 # No nos interesan ni los acentos, ni los ni los espacios en blanco ni las mayúsculas, 
@@ -52,7 +53,8 @@ def Normalizar(expresion):
 # y comparamos con la segunda mitad de la expresion a medida que desapilamos
 # Si no dan distinto en ningun momento, estamos ante un palíndromo
 
-def esPalindromo(expresion):
+def esPalindromo(rawExpression):
+    expresion = Normalizar(rawExpression)
     long = len(expresion)//2
     mitad = Pila()
     # PRIMERA MITAD: Se apila
@@ -67,9 +69,8 @@ def esPalindromo(expresion):
     return True
 
 expresion = input("Ingrese un palíndromo\n> ")
-expNormalizada = Normalizar(expresion)
 
-if esPalindromo(expNormalizada):
+if esPalindromo(expresion):
     print("Es palindromo")
 else:
     print("No es palindromo")

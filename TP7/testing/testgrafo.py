@@ -1,5 +1,6 @@
-from ClaseGrafoSinPeso import Grafo
-from ClaseRGrafo import *
+from ..tads.GrafoPond import Grafo
+from ..tads.GrafoPond import BFS
+
 
 grafo1 = Grafo() 
 

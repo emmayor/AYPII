@@ -37,7 +37,8 @@ def Normalizar(expresion):
 # y comparamos con la segunda mitad de la expresion a medida que desapilamos
 # Si no dan distinto en ningun momento, estamos ante un palíndromo
 
-def esPalindromo(expresion):
+def esPalindromo(rawExpresion):
+    expresion = Normalizar(rawExpresion)
     long = len(expresion)//2
     mitad = Pila()
     for i in range(long):
@@ -54,8 +55,7 @@ expresion = file.read()
 
 start = perf_counter_ns()
 
-expNormalizada = Normalizar(expresion)
-if esPalindromo(expNormalizada):
+if esPalindromo(expresion):
     print("Es palindromo")
 else:
     print("No es palindromo")

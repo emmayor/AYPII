@@ -1,4 +1,4 @@
-from ClaseNodo import Nodo
+from Nodo import Nodo
 
 class Grafo:
     """ Crea un grafo. Si es_dirigido se establece en True, 
@@ -30,9 +30,6 @@ class Grafo:
         self.n_arcos += 1
 
     def insertar(self, x, z, doble=False):
-        """ Agregar el vértice de origen. Si excepcion es True, 
-        entonces se hace arista doble si es_dirigido = True 
-         y arista simple si es_dirigido = False """
         if x not in self.lista_vertices:
             self.lista_vertices[x] = None
         """ Agregar el destino (ojo, x sumideros)"""
