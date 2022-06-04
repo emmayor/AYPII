@@ -46,8 +46,8 @@ class GrafoPond:
 	def n_arcos(self):
 		return self.n_arcos
 
-	def insertar(self, x, z, peso_arco = 0, dirigido = False):
-		""" Agregar el vértice de origen """
+	def insertar(self, x, z, peso_arco = 0, doble = False):
+		""" Agregar el vertice de origen """
 		if x not in self.lista_vertices:
 			self.lista_vertices[x]= None
 		""" Agregar el destino (ojo, x sumideros)"""
@@ -57,8 +57,8 @@ class GrafoPond:
 		nw = Arista(z, peso_arco, self.lista_vertices[x])
 		self.lista_vertices[x] = nw
 		self.n_arcos+=1
-		if dirigido is False and z != x:
-			self.insertar(z,x, peso_arco, True)
+		if doble:
+			self.insertar(z,x, peso_arco, False)
 	def primer_adyacente(self, x):
 		""" Devuelve el primer vertice adyacente (si existe) de x"""
 		if x not in self.lista_vertices:

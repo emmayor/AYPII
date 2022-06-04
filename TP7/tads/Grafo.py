@@ -1,4 +1,4 @@
-from Nodo import Nodo
+from tads.Nodo import Nodo
 
 class Grafo:
     """ Crea un grafo. Si es_dirigido se establece en True, 
@@ -22,6 +22,13 @@ class Grafo:
 
     def n_arcos(self):
         return self.n_arcos
+
+    def primer_adyacente(self, x):
+        """ Devuelve el primer vértice adyacente (si existe) de x"""
+        if x not in self.lista_vertices:
+            raise ValueError("El vértice no existe en el diccionario del Grafo")
+        else:
+            return self.lista_vertices[x]
 
     def insertarArco(self,x,z):
         """Se carga el arco. ATENCION: Deben existir los vertices previamente"""
