@@ -1,4 +1,4 @@
-from tads.Nodo import Nodo
+from Nodo import Nodo
 
 class Grafo:
     """ Crea un grafo. Si es_dirigido se establece en True, 
