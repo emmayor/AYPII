@@ -20,7 +20,7 @@ cola = Cola()
 cola.meter("a")
 cola.meter("b")    
 cola.meter("c")    
-cola.meter("d")
+cola.meter(5)
 
 capicua = espejo(cola)
 

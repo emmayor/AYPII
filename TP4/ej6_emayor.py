@@ -10,7 +10,7 @@
 from tads import Pila
 
 def mayor(pila):
-    maximo = 0 # 1
+    maximo = float(-inf) # 1
     while not pila.estaVacia(): # 3
         temp = pila.desapilar() # 2
         if temp > maximo:       # 1

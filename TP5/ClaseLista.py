@@ -139,27 +139,54 @@ class ListaEnlazada:
             otraActual = otraActual.proximo()
         return True
 
-def intercambiar(i, lista):
+def intercambiar(x, lista):
     """ Invierte la posicion del i-elemento de la lista con su siguiente
      (i va de 0 a hasta len-1)"""
-    ant = lista.prim
-    act = ant.proximo()
-    sig = act.proximo()
-    if i == 0:
-        lista.prim = act
-        ant.setproximo(sig)
-        act.setproximo(ant)
-    elif i > 0 and i < len(lista)-1:
-        for i in range(i-1):
-            ant = ant.proximo()               
-        act = ant.proximo()
+    # 1: La lista está vacia
+    if lista.estaVacia():
+        raise IndexError("Lista vacía")
+    # 2: El valor está en la cabecera y hay mas de un elemento
+    elif lista.prim.valor() == x and lista.prim.proximo() != None:
+        primOld = lista.prim
+        lista.prim = primOld.proximo()
+        primOld.setproximo(lista.prim.proximo())
+        lista.prim.setproximo(primOld)
+        primold=lista.prim
+        return
+    # 3: El valor puede estar en el medio y hay mas de un elemento
+    elif lista.prim.proximo() != None:
+        ant = lista.prim
+        act = ant.proximo()            
         sig = act.proximo()
-
-        ant.setproximo(sig)
-        act.setproximo(sig.proximo())
-        sig.setproximo(act)
-    else:
-        raise IndexError("Item fuera de rango")
+        while act.valor() != x and sig != None:
+            ant = act
+            act = sig               
+            sig = sig.proximo()
+        if act.valor()!=x:
+            raise ValueError("El valor no existe")
+        elif sig != None:
+            ant.setproximo(sig)
+            act.setproximo(sig.proximo())
+            sig.setproximo(act)
+        
+        
+        
+    
+    
+    #elif i > 0 and i < len(lista)-1:
+    #    ant = lista.prim
+    #    act = ant.proximo()
+    #    sig = act.proximo()
+    #    for i in range(i-1):
+    #        ant = ant.proximo()               
+    #    act = ant.proximo()
+    #    sig = act.proximo()
+    #
+    #    ant.setproximo(sig)
+    #    act.setproximo(sig.proximo())
+    #    sig.setproximo(act)
+    #else:
+    #    raise IndexError("Item fuera de rango ó lista de único elemento")
 
 def intercalarDesc(lista1, lista2):
     listaFinal = ListaEnlazada()
