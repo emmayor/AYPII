@@ -61,52 +61,49 @@ class GArc():
         self.n2 = node_2
         self.batch = l_batch
         self.double = double
+        self.group = pyglet.graphics.OrderedGroup(-1)
         self.arc = pyglet.shapes.Line(x=self.n1.x(), y=self.n1.y(), 
                                        x2=self.n2.x(),y2=self.n2.y(), 
-                                        color=(255,255,255), batch=self.batch)     
-
-        self.tip = pyglet.shapes.Triangle(x=0, y=0, 
+                                        color=(255,255,255), batch=self.batch, group=self.group)     
+        if not double:
+            self.tip = pyglet.shapes.Triangle(x=0, y=0, 
                                         x2=0, y2=0, 
                                         x3=0, y3=0,
                                         color=(255,255,255), batch=self.batch)      
-        if double:
-            self.tip2 = pyglet.shapes.Triangle(x=0, y=0, 
-                                        x2=0, y2=0, 
-                                        x3=0, y3=0,
-                                        color=(255,255,255), batch=self.batch)   
-            
-        self.update_pos()
+            self.update_tip_pos()
+        self.update_arc_pos()
 
-    def calculate_tip_pos(self,node):
+    def calculate_tip_pos(self):
+      
         # ARROW SLOPE
         if (self.arc.y2-self.arc.y) != 0:
             self.slope = (self.arc.x2-self.arc.x)/(self.arc.y2-self.arc.y)
         # ARROW ANGLE
         if self.n1.y() < self.n2.y():
-            angle_t1 = atan(self.slope)          
+            angle_t1 = atan(self.slope)+pi          
         else:
-            angle_t1 = atan(self.slope)+pi 
-        if node == self.n2:
-            angle_t1 += pi
+            angle_t1 = atan(self.slope) 
         angle_t2 = angle_t1+0.26
         angle_t3 = angle_t1-0.26
-
-        x_tip1 = sin(angle_t1)*node.r()+node.x()
-        y_tip1 = cos(angle_t1)*node.r()+node.y()
-        x_tip2 = sin(angle_t2)*(node.r()+15)+node.x()
-        y_tip2 = cos(angle_t2)*(node.r()+15)+node.y()
-        x_tip3 = sin(angle_t3)*(node.r()+15)+node.x()
-        y_tip3 = cos(angle_t3)*(node.r()+15)+node.y()
+        r2 = self.n2.r()+15
+        x_tip1 = sin(angle_t1)*self.n2.r()+self.n2.x()
+        y_tip1 = cos(angle_t1)*self.n2.r()+self.n2.y()
+        x_tip2 = sin(angle_t2)*(r2)+self.n2.x()
+        y_tip2 = cos(angle_t2)*(r2)+self.n2.y()
+        x_tip3 = sin(angle_t3)*(r2)+self.n2.x()
+        y_tip3 = cos(angle_t3)*(r2)+self.n2.y()
         return (x_tip1,y_tip1,x_tip2,y_tip2,x_tip3,y_tip3)
 
-    def update_pos(self):
+    def update_arc_pos(self):
         self.arc.position = (self.n1.x(),self.n1.y(),self.n2.x(),self.n2.y())
-        self.tip.position = self.calculate_tip_pos(self.n2)
-        if self.double:
-            self.tip2.position = self.calculate_tip_pos(self.n1)
+
+    def update_tip_pos(self):
+        self.tip.position = self.calculate_tip_pos()
             
     def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
-        self.update_pos()
+        self.update_arc_pos()
+        if not self.double:
+            self.update_tip_pos()
 
 class GrafoPlot(pyglet.window.Window):
     def __init__(self, width=800, height=600):
@@ -118,7 +115,7 @@ class GrafoPlot(pyglet.window.Window):
         self.push_node_handlers
         self.push_arc_handlers
 
-    def generateGrid(self, size):
+    def init_positions(self, size):
         padding = 30
         grid_width =  self.width  - 2*padding
         grid_height = self.height - 2*padding
@@ -137,14 +134,13 @@ class GrafoPlot(pyglet.window.Window):
     def push_arc_handlers(self, arc):
         super().push_handlers(arc.on_mouse_drag)
 
-    def addNode(self,label,x,y,r):
+    def add_node(self,label,x,y,r):
         new_node = GNode(label, x, y, r, self.batch)
         self.nodes[new_node.name()] = [new_node]
-        self.push_node_handlers(new_node)
-        #print(self.nodes)
+        self.push_node_hand9lers(new_node)
         return new_node
 
-    def addArc(self,node_1,node_2,double=False):
+    def add_arc(self,node_1,node_2,double=False):
         new_arc = GArc(self.nodes[node_1][0], self.nodes[node_2][0],self.batch, double)
         self.nodes[node_1].append(new_arc)           
         self.push_arc_handlers(new_arc)
@@ -165,13 +161,13 @@ class GrafoPlot(pyglet.window.Window):
 # EXAMPLE
 if __name__ == '__main__':
     gplot = GrafoPlot(800,600)
-    gplot.addNode("EQS",500,400,30)
-    gplot.addNode("TRV",200,500,30)
-    gplot.addNode("TCK",300,500,30)
-    gplot.addNode("BSA",100,60,30)
+    gplot.add_node("EQS",500,400,30)
+    gplot.add_node("TRV",200,500,30)
+    gplot.add_node("TCK",300,500,30)
+    gplot.add_node("BSA",100,60,30)
     
-    gplot.addArc("EQS", "TRV")
-    gplot.addArc("EQS", "TCK")
-    gplot.addArc("EQS", "BSA", True)
+    gplot.add_arc("EQS", "TRV")
+    gplot.add_arc("EQS", "TCK")
+    gplot.add_arc("EQS", "BSA", True)
     
     pyglet.app.run()
