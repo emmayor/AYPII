@@ -20,7 +20,6 @@ class GNode():
                                        font_size=14,x=self.shape.x, y=self.shape.y,
                                        anchor_x="center", anchor_y="center",
                                        batch=self.batch, group=self.foreground)
-
     def change_pos(self, x, y):
         self.shape.x = x
         self.shape.y = y
@@ -137,7 +136,7 @@ class GrafoPlot(pyglet.window.Window):
     def add_node(self,label,x,y,r):
         new_node = GNode(label, x, y, r, self.batch)
         self.nodes[new_node.name()] = [new_node]
-        self.push_node_hand9lers(new_node)
+        self.push_node_handlers(new_node)
         return new_node
 
     def add_arc(self,node_1,node_2,double=False):
