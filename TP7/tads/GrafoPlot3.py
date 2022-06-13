@@ -1,7 +1,7 @@
 import pyglet 
 
-from math import atan, sin, cos, pi
-from random import randint
+from math import atan, sin, cos, pi, sqrt
+from random import choice
 from Grafo import Grafo
 
 # Enable Antialiasing
@@ -79,6 +79,8 @@ class GArc():
         # ARROW SLOPE
         if (self.arc.y2-self.arc.y) != 0:
             self.slope = (self.arc.x2-self.arc.x)/(self.arc.y2-self.arc.y)
+        else:
+            self.slope = 999
         # ARROW ANGLE
         if self.n1.y() < self.n2.y():
             angle_t1 = atan(self.slope)+pi          
@@ -112,11 +114,9 @@ class GrafoPlot(pyglet.window.Window):
         self.batch = pyglet.graphics.Batch()    
         self.nodes = {}
         self.grid = []
-        self.init_positions(4)
-        self.push_node_handlers
-        self.push_arc_handlers
 
-    def init_positions(self, size):
+    def init_positions(self,size):
+        
         padding = 30
         grid_width =  self.width  - padding
         grid_height = self.height - padding
@@ -130,6 +130,7 @@ class GrafoPlot(pyglet.window.Window):
                 #                                       grid_offset_y+grid_node_dist_y*posy,
                 #                                       10,batch=self.batch,color=(0,0,255)))
                 self.grid.append((grid_offset_x+grid_node_dist_x*posx,grid_offset_y+grid_node_dist_y*posy))
+        print(self.grid)
                 
     def push_node_handlers(self, node):
         super().push_handlers(node.on_mouse_drag)
@@ -148,23 +149,29 @@ class GrafoPlot(pyglet.window.Window):
         new_arc = GArc(self.nodes[node_1][0], self.nodes[node_2][0],self.batch, double)
         self.nodes[node_1].append(new_arc)           
         self.push_arc_handlers(new_arc)
-        print(self.nodes)
  
     def parse_graph(self,graph):
         """Takes a Grafo() object and creates GNode's and GArc's"""
-        self.init_positions(4)
+        size = int(sqrt(len(graph.lista_vertices)))+1
+        print(size)
+        self.init_positions(size)
+        
         for n in graph.vertices():
-            coord = self.grid[randint(0,15)]
+            coord = choice(self.grid)
             self.add_node(n,coord[0],coord[1],30)
+            self.grid.remove(coord)
+            print(coord)
         for n in graph.vertices():
-            self.add_arc(graph.vertices()[n],graph.primer_adyacente(n).valor())
+            next_one = graph.primer_adyacente(n)
+            while next_one != None:
+                self.add_arc(next_one.valor(),n)
+                next_one = next_one.proximo()
 
     def push_all_handlers(self):
         for n in self.nodes:
             super().push_handlers(n.on_mouse_drag)
             super().push_handlers(n.on_mouse_motion)
-        for l in self.arrows:
-            super().push_handlers(l.on_mouse_drag)
+
 
     def on_draw(self):
         self.clear()
@@ -175,23 +182,10 @@ if __name__ == '__main__':
     gplot = GrafoPlot(800,600)
     grafo1 = Grafo()
 
-    grafo1.insertar("EQS","TRV")
-    grafo1.insertar("TRV","GCA")
-    grafo1.insertar("TRV","EQS")
+    grafo1.insertar("ESQ","TRV", True)
 
-
-    grafo1.imprimir()
-    print(grafo1.lista_vertices)
-    gplot.parse_graph(grafo1)
-
-
-    # gplot.add_node("EQS",500,400,30)
-    # gplot.add_node("TRV",200,500,30)
-    # gplot.add_node("TCK",300,500,30)
-    # gplot.add_node("BSA",100,60,30)
     
-    # gplot.add_arc("EQS", "TRV")
-    # gplot.add_arc("EQS", "TCK")
-    # gplot.add_arc("EQS", "BSA", True)
+
+    gplot.parse_graph(grafo1)
     
     pyglet.app.run()
