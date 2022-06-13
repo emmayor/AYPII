@@ -151,7 +151,7 @@ def intercambiar(x, lista):
         lista.prim = primOld.proximo()
         primOld.setproximo(lista.prim.proximo())
         lista.prim.setproximo(primOld)
-        primold=lista.prim
+        primOld = lista.prim
         return
     # 3: El valor puede estar en el medio y hay mas de un elemento
     elif lista.prim.proximo() != None:
@@ -169,24 +169,6 @@ def intercambiar(x, lista):
             act.setproximo(sig.proximo())
             sig.setproximo(act)
         
-        
-        
-    
-    
-    #elif i > 0 and i < len(lista)-1:
-    #    ant = lista.prim
-    #    act = ant.proximo()
-    #    sig = act.proximo()
-    #    for i in range(i-1):
-    #        ant = ant.proximo()               
-    #    act = ant.proximo()
-    #    sig = act.proximo()
-    #
-    #    ant.setproximo(sig)
-    #    act.setproximo(sig.proximo())
-    #    sig.setproximo(act)
-    #else:
-    #    raise IndexError("Item fuera de rango ó lista de único elemento")
 
 def intercalarDesc(lista1, lista2):
     listaFinal = ListaEnlazada()
@@ -205,3 +187,4 @@ def intercalarDesc(lista1, lista2):
         listaFinal.append(maxi)
         listaFinal.append(mini)
     return listaFinal
+
