@@ -19,7 +19,7 @@ class GNode():
         self.shape = pyglet.shapes.Circle(x, y, self.radius, 
                                         batch=self.batch, group=self.background)
         self.label = pyglet.text.Label(text=self.n_name, color=(0,0,0,255), 
-                                       font_size=14,x=self.shape.x, y=self.shape.y,
+                                       font_size=12,x=self.shape.x, y=self.shape.y,
                                        anchor_x="center", anchor_y="center",
                                        batch=self.batch, group=self.foreground)
     def change_pos(self, x, y):
@@ -59,12 +59,12 @@ class GNode():
 class GArc():
     def __init__(self, node_1, node_2,l_batch, double=False):
         self.n1 = node_1
-        self.n2 = node_2
+        self.n2 = node_2    
         self.batch = l_batch
         self.double = double
         self.group = pyglet.graphics.OrderedGroup(-1)
-        self.arc = pyglet.shapes.Line(x=self.n1.x(), y=self.n1.y(), 
-                                       x2=self.n2.x(),y2=self.n2.y(), 
+        self.arc = pyglet.shapes.Line(  x=self.n1.x(), y=self.n1.y(), 
+                                        x2=self.n2.x(),y2=self.n2.y(), 
                                         color=(255,255,255), batch=self.batch, group=self.group)     
         if not double:
             self.tip = pyglet.shapes.Triangle(x=0, y=0, 
@@ -75,7 +75,6 @@ class GArc():
         self.update_arc_pos()
 
     def calculate_tip_pos(self):
-      
         # ARROW SLOPE
         if (self.arc.y2-self.arc.y) != 0:
             self.slope = (self.arc.x2-self.arc.x)/(self.arc.y2-self.arc.y)
@@ -114,6 +113,7 @@ class GrafoPlot(pyglet.window.Window):
         self.batch = pyglet.graphics.Batch()    
         self.nodes = {}
         self.grid = []
+        self.placeholders = []
 
     def init_positions(self,size):
         
@@ -126,9 +126,9 @@ class GrafoPlot(pyglet.window.Window):
         grid_offset_y = grid_node_dist_y//2+padding//2
         for posx in range(size):
             for posy in range(size):
-                # self.grid.append(pyglet.shapes.Circle(grid_offset_x+grid_node_dist_x*posx,
-                #                                       grid_offset_y+grid_node_dist_y*posy,
-                #                                       10,batch=self.batch,color=(0,0,255)))
+                self.placeholders.append(pyglet.shapes.Circle(grid_offset_x+grid_node_dist_x*posx,
+                                                                grid_offset_y+grid_node_dist_y*posy,
+                                                                10,batch=self.batch,color=(0,0,255)))
                 self.grid.append((grid_offset_x+grid_node_dist_x*posx,grid_offset_y+grid_node_dist_y*posy))
         print(self.grid)
                 
@@ -143,49 +143,56 @@ class GrafoPlot(pyglet.window.Window):
         new_node = GNode(label, x, y, r, self.batch)
         self.nodes[new_node.name()] = [new_node]
         self.push_node_handlers(new_node)
-        return new_node
 
     def add_arc(self,node_1,node_2,double=False):
-        new_arc = GArc(self.nodes[node_1][0], self.nodes[node_2][0],self.batch, double)
+        new_arc = GArc(self.nodes[node_1][0],self.nodes[node_2][0],self.batch, double)
         self.nodes[node_1].append(new_arc)           
         self.push_arc_handlers(new_arc)
  
     def parse_graph(self,graph):
         """Takes a Grafo() object and creates GNode's and GArc's"""
-        size = int(sqrt(len(graph.lista_vertices)))+1
-        print(size)
+        # Prepare node positions
+        size = int(sqrt(graph.n_vertices()))+1
         self.init_positions(size)
-        
+        # Add nodes 
         for n in graph.vertices():
             coord = choice(self.grid)
-            self.add_node(n,coord[0],coord[1],30)
+            self.add_node(n,coord[0],coord[1],25)
             self.grid.remove(coord)
             print(coord)
-        for n in graph.vertices():
-            next_one = graph.primer_adyacente(n)
-            while next_one != None:
-                self.add_arc(next_one.valor(),n)
-                next_one = next_one.proximo()
+        # Add arcs
+        for s in graph.vertices():
+            next_one = graph.primer_adyacente(s)
+            next_one_list = graph.primer_adyacente(next_one.valor())
+            while next_one_list != s and next_one_list != None:
+                next_one_list = next_one_list.proximo()
+
+
+
+
 
     def push_all_handlers(self):
         for n in self.nodes:
             super().push_handlers(n.on_mouse_drag)
             super().push_handlers(n.on_mouse_motion)
 
-
     def on_draw(self):
         self.clear()
         self.batch.draw()
 
-# EXAMPLE
+# EJEMPLO
 if __name__ == '__main__':
     gplot = GrafoPlot(800,600)
     grafo1 = Grafo()
 
-    grafo1.insertar("ESQ","TRV", True)
-
-    
+    grafo1.insertar("ESQ","TRV",True)
+    grafo1.insertar("CHL","TRV",True)
+    grafo1.insertar("ESQ","TCK",True)
+    grafo1.insertar("TCK","TLW",True)
+    grafo1.insertar("RWS","TLW",True)
+    grafo1.insertar("PTM","RWS",True)
+    grafo1.insertar("TLW","CMD",True)
+    grafo1.insertar("CMD","TCK",True)
 
     gplot.parse_graph(grafo1)
-    
     pyglet.app.run()
