@@ -145,9 +145,12 @@ class GrafoPlot(pyglet.window.Window):
         self.push_node_handlers(new_node)
 
     def add_arc(self,node_1,node_2,double=False):
-        new_arc = GArc(self.nodes[node_1][0],self.nodes[node_2][0],self.batch, double)
-        self.nodes[node_1].append(new_arc)           
-        self.push_arc_handlers(new_arc)
+        if node_1 in self.nodes and node_2 in self.nodes:
+            new_arc = GArc(self.nodes[node_1][0],self.nodes[node_2][0],self.batch, double)
+            self.nodes[node_1].append(new_arc)           
+            self.push_arc_handlers(new_arc)
+        else:
+            raise IndexError("Couldn't find one or both nodes!")
  
     def parse_graph(self,graph):
         """Takes a Grafo() object and creates GNode's and GArc's"""
@@ -161,15 +164,20 @@ class GrafoPlot(pyglet.window.Window):
             self.grid.remove(coord)
             print(coord)
         # Add arcs
-        for s in graph.vertices():
-            next_one = graph.primer_adyacente(s)
-            next_one_list = graph.primer_adyacente(next_one.valor())
-            while next_one_list != s and next_one_list != None:
+        for nodo in graph.vertices():
+            nodo_lista = graph.primer_adyacente(s)
+            contranodo_lista = graph.primer_adyacente(nodo_lista.valor())
+            while contranodo_lista != None:
+                print(f"next_one_list.valor(): {contranodo_lista.valor()}")
+                print(f"s: {s}")
+                if contranodo_lista.valor() == nodo_lista.valor():
+                    self.add_arc(s,contranodo_lista.valor(),True)
+                else:
+                    self.add_arc(s,contranodo_lista.valor())
                 next_one_list = next_one_list.proximo()
-
-
-
-
+                
+            
+            
 
     def push_all_handlers(self):
         for n in self.nodes:
@@ -186,13 +194,8 @@ if __name__ == '__main__':
     grafo1 = Grafo()
 
     grafo1.insertar("ESQ","TRV",True)
-    grafo1.insertar("CHL","TRV",True)
-    grafo1.insertar("ESQ","TCK",True)
-    grafo1.insertar("TCK","TLW",True)
-    grafo1.insertar("RWS","TLW",True)
-    grafo1.insertar("PTM","RWS",True)
-    grafo1.insertar("TLW","CMD",True)
-    grafo1.insertar("CMD","TCK",True)
+    grafo1.insertar("TRV","ESQ",True)
+
 
     gplot.parse_graph(grafo1)
     pyglet.app.run()
