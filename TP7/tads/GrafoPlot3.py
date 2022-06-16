@@ -116,7 +116,6 @@ class GrafoPlot(pyglet.window.Window):
         self.placeholders = []
 
     def init_positions(self,size):
-        
         padding = 30
         grid_width =  self.width  - padding
         grid_height = self.height - padding
@@ -156,28 +155,32 @@ class GrafoPlot(pyglet.window.Window):
         """Takes a Grafo() object and creates GNode's and GArc's"""
         # Prepare node positions
         size = int(sqrt(graph.n_vertices()))+1
+        arc_list = []
         self.init_positions(size)
+
         # Add nodes 
         for n in graph.vertices():
             coord = choice(self.grid)
             self.add_node(n,coord[0],coord[1],25)
             self.grid.remove(coord)
-            print(coord)
+
         # Add arcs
-        for nodo in graph.vertices():
-            nodo_lista = graph.primer_adyacente(s)
-            contranodo_lista = graph.primer_adyacente(nodo_lista.valor())
-            while contranodo_lista != None:
-                print(f"next_one_list.valor(): {contranodo_lista.valor()}")
-                print(f"s: {s}")
-                if contranodo_lista.valor() == nodo_lista.valor():
-                    self.add_arc(s,contranodo_lista.valor(),True)
-                else:
-                    self.add_arc(s,contranodo_lista.valor())
-                next_one_list = next_one_list.proximo()
-                
-            
-            
+        for n in graph.vertices():
+            nl = graph.primer_adyacente(n)
+            while nl != None:
+                cn_l = graph.primer_adyacente(nl.valor())
+                while cn_l != None:
+                    print(f"nodo_lista.valor(): {nl.valor()}")
+                    print(f"s: {n}")
+                    if cn_l.valor() == n and (n,nl.valor(),True) not in arc_list and (nl.valor(),n,True) not in arc_list:
+                        arc_list.append((n,nl.valor(),True))
+                    if (n,nl.valor(),True) not in arc_list and (nl.valor(),n,True) not in arc_list:
+                        arc_list.append((n,nl.valor(),False))
+                    cn_l = cn_l.proximo()
+                nl = nl.proximo()
+        arc_set = set(arc_list)
+        for arc in arc_set:
+            self.add_arc(arc[0],arc[1],arc[2])
 
     def push_all_handlers(self):
         for n in self.nodes:
@@ -192,10 +195,10 @@ class GrafoPlot(pyglet.window.Window):
 if __name__ == '__main__':
     gplot = GrafoPlot(800,600)
     grafo1 = Grafo()
-
     grafo1.insertar("ESQ","TRV",True)
-    grafo1.insertar("TRV","ESQ",True)
-
+    grafo1.insertar("CHL","ESQ")
+    grafo1.insertar("ESQ","BSA")
+    grafo1.insertar("GCA","BSA")
 
     gplot.parse_graph(grafo1)
     pyglet.app.run()
