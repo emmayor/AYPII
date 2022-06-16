@@ -125,9 +125,7 @@ class GrafoPlot(pyglet.window.Window):
         grid_offset_y = grid_node_dist_y//2+padding//2
         for posx in range(size):
             for posy in range(size):
-                self.placeholders.append(pyglet.shapes.Circle(grid_offset_x+grid_node_dist_x*posx,
-                                                                grid_offset_y+grid_node_dist_y*posy,
-                                                                10,batch=self.batch,color=(0,0,255)))
+                #self.placeholders.append(pyglet.shapes.Circle(grid_offset_x+grid_node_dist_x*posx,grid_offset_y+grid_node_dist_y*posy,10,batch=self.batch,color=(0,0,255)))
                 self.grid.append((grid_offset_x+grid_node_dist_x*posx,grid_offset_y+grid_node_dist_y*posy))
         print(self.grid)
                 
@@ -164,23 +162,51 @@ class GrafoPlot(pyglet.window.Window):
             self.add_node(n,coord[0],coord[1],25)
             self.grid.remove(coord)
 
-        # Add arcs
-        for n in graph.vertices():
-            nl = graph.primer_adyacente(n)
-            while nl != None:
-                cn_l = graph.primer_adyacente(nl.valor())
-                while cn_l != None:
-                    print(f"nodo_lista.valor(): {nl.valor()}")
-                    print(f"s: {n}")
-                    if cn_l.valor() == n and (n,nl.valor(),True) not in arc_list and (nl.valor(),n,True) not in arc_list:
-                        arc_list.append((n,nl.valor(),True))
-                    if (n,nl.valor(),True) not in arc_list and (nl.valor(),n,True) not in arc_list:
-                        arc_list.append((n,nl.valor(),False))
-                    cn_l = cn_l.proximo()
-                nl = nl.proximo()
-        arc_set = set(arc_list)
-        for arc in arc_set:
+        graph.imprimir()
+        # # Add arcs
+        # for n in graph.vertices():
+        #     print(f"n: {n}")
+        #     nl = graph.primer_adyacente(n)
+        #     while nl != None:
+        #         cn_l = graph.primer_adyacente(nl.valor())
+        #         while cn_l != None:
+        #             print(f"nodo_lista.valor(): {nl.valor()}")
+        #             if (n,nl.valor(),True) not in arc_list and (nl.valor(),n,True) not in arc_list:
+        #                 if cn_l.valor() == n:
+        #                     arc_list.append((n,nl.valor(),True))
+        #             if (n,nl.valor(),False) not in arc_list and (nl.valor(),n,False) not in arc_list:
+        #                 arc_list.append((n,nl.valor(),False))
+        #             cn_l = cn_l.proximo()
+        #         nl = nl.proximo()
+        # arc_set = set(arc_list)
+        # for arc in arc_set:
+        #     self.add_arc(arc[0],arc[1],arc[2])
+        # print(arc_set)
+
+
+        # Add Arcs
+        for n1 in graph.vertices():
+            print(f"n: {n1}")
+            n_list = graph.primer_adyacente(n1)
+            if n_list != None:
+                for n2 in n_list:
+                    arc_list.append((n1,n2.valor(),False))
+
+        # Search for non-oriented graphs
+
+        for arc1 in arc_list:
+            for arc2 in arc_list:
+                if arc1[0] == arc2[1] and arc1[1] == arc2[0]:
+                    arc_list.remove(arc2)
+                    arc_list[arc_list.index(arc1)] = (arc1[0],arc1[1],True)
+
+
+        for arc in arc_list:
             self.add_arc(arc[0],arc[1],arc[2])
+        print(arc_list)
+
+
+
 
     def push_all_handlers(self):
         for n in self.nodes:
